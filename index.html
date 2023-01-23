@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" href="img/logo_temp.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="img/logo.svg" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/media.css">
     <link rel="stylesheet" href="css/sys.css">
@@ -18,14 +18,14 @@
 <body>
 
 <header>
-        <div class="logo">
-            <img src="img/logo_temp.svg" alt="Logo Image">
-            <span class="logo__text">Weathy</span>
-        </div>
-        <div class="search search_invisible">
-            <i class="uil uil-search"></i>
-            <input type="text" name="" id="searchHeader" placeholder="Search">
-        </div>
+    <div class="logo">
+        <img src="img/logo.svg" alt="Logo Image">
+        <span class="logo__text">Weathy</span>
+    </div>
+    <div class="search search_invisible">
+        <i class="uil uil-search"></i>
+        <input type="text" name="" id="searchHeader" placeholder="Search">
+    </div>
 </header>
 <section class="search_screen">
     <p class="search_screen__text">Type city, country below and press <kbd>Enter</kbd> to get weather</p>
@@ -91,79 +91,78 @@
     </div>
     <div class="forecast_section">
         <span class="heading">Forecast</span>
-        <br><span class="coming_soon">Coming soon...</span>
-<!--        <div class="forecast_cards">-->
-<!--            <div class="card">-->
-<!--                <span class="card__date">Jan 18</span>-->
-<!--                <div class="card__info">-->
-<!--                    <img src="img/cloudy.svg" alt="" class="weather_pattern">-->
-<!--                    <div class="info__temperature">-->
-<!--                        <span class="temp_day">24</span>-->
-<!--                        <span class="temp_night">9</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="card">-->
-<!--                <span class="card__date">Jan 18</span>-->
-<!--                <div class="card__info">-->
-<!--                    <img src="img/cloudy.svg" alt="" class="weather_pattern">-->
-<!--                    <div class="info__temperature">-->
-<!--                        <span class="temp_day">24</span>-->
-<!--                        <span class="temp_night">9</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="card">-->
-<!--                <span class="card__date">Jan 18</span>-->
-<!--                <div class="card__info">-->
-<!--                    <img src="img/cloudy.svg" alt="" class="weather_pattern">-->
-<!--                    <div class="info__temperature">-->
-<!--                        <span class="temp_day">24</span>-->
-<!--                        <span class="temp_night">9</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="card">-->
-<!--                <span class="card__date">Jan 18</span>-->
-<!--                <div class="card__info">-->
-<!--                    <img src="img/cloudy.svg" alt="" class="weather_pattern">-->
-<!--                    <div class="info__temperature">-->
-<!--                        <span class="temp_day">24</span>-->
-<!--                        <span class="temp_night">9</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="card">-->
-<!--                <span class="card__date">Jan 18</span>-->
-<!--                <div class="card__info">-->
-<!--                    <img src="img/cloudy.svg" alt="" class="weather_pattern">-->
-<!--                    <div class="info__temperature">-->
-<!--                        <span class="temp_day">24</span>-->
-<!--                        <span class="temp_night">9</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="card">-->
-<!--                <span class="card__date">Jan 18</span>-->
-<!--                <div class="card__info">-->
-<!--                    <img src="img/cloudy.svg" alt="" class="weather_pattern">-->
-<!--                    <div class="info__temperature">-->
-<!--                        <span class="temp_day">24</span>-->
-<!--                        <span class="temp_night">9</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="card">-->
-<!--                <span class="card__date">Jan 18</span>-->
-<!--                <div class="card__info">-->
-<!--                    <img src="img/cloudy.svg" alt="" class="weather_pattern">-->
-<!--                    <div class="info__temperature">-->
-<!--                        <span class="temp_day">24</span>-->
-<!--                        <span class="temp_night">9</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="forecast_cards">
+            <div class="card">
+                <span class="card__date">Today</span>
+                <div class="card__info">
+                    <img src="img/cloudy.svg" alt="" class="weather_pattern">
+                    <div class="info__temperature" id="c0">
+                        <span class="temp_day">24</span>
+                        <span class="temp_night">9</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <span class="card__date" id="d1">Jan 18</span>
+                <div class="card__info">
+                    <img src="img/cloudy.svg" alt="" class="weather_pattern">
+                    <div class="info__temperature" id="c1">
+                        <span class="temp_day">24</span>
+                        <span class="temp_night">9</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <span class="card__date" id="d2">Jan 18</span>
+                <div class="card__info">
+                    <img src="img/cloudy.svg" alt="" class="weather_pattern">
+                    <div class="info__temperature" id="c2">
+                        <span class="temp_day">24</span>
+                        <span class="temp_night">9</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <span class="card__date" id="d3">Jan 18</span>
+                <div class="card__info">
+                    <img src="img/cloudy.svg" alt="" class="weather_pattern">
+                    <div class="info__temperature" id="c3">
+                        <span class="temp_day">24</span>
+                        <span class="temp_night">9</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <span class="card__date" id="d4">Jan 18</span>
+                <div class="card__info">
+                    <img src="img/cloudy.svg" alt="" class="weather_pattern">
+                    <div class="info__temperature" id="c4">
+                        <span class="temp_day">24</span>
+                        <span class="temp_night">9</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <span class="card__date" id="d5">Jan 18</span>
+                <div class="card__info">
+                    <img src="img/cloudy.svg" alt="" class="weather_pattern">
+                    <div class="info__temperature" id="c5">
+                        <span class="temp_day">24</span>
+                        <span class="temp_night">9</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <span class="card__date" id="d6">Jan 18</span>
+                <div class="card__info">
+                    <img src="img/cloudy.svg" alt="" class="weather_pattern">
+                    <div class="info__temperature" id="c6">
+                        <span class="temp_day">24</span>
+                        <span class="temp_night">9</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="air_quality_section">
         <span class="heading">Air Quality</span><span class="powered_by">powered by</span>
@@ -171,6 +170,7 @@
         <br><span class="coming_soon">Coming soon...</span>
     </div>
 </main>
-<script src="app/script.js"></script>
+<script type="module" src="app/script.js"></script>
+<script type="module" src="app/api.js"></script>
 </body>
 </html>

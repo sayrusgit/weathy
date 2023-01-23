@@ -1,3 +1,5 @@
+// API
+
 const weatherAPI = '673d0423ff1aec6d869b535e82b0d5e7';
 
 let weatherData = {
@@ -29,7 +31,6 @@ const fetchData = async (city) => {
     }
 
     const data = await response.json();
-    console.log(data)
 
     const { name:cityName, timezone } = data;
     let { main:state, description } = data.weather[0];
@@ -54,6 +55,8 @@ const fetchData = async (city) => {
     renderWeather()
 }
 
+// Weather
+
 const renderWeather = () => {
 
     document.getElementById('city').textContent = weatherData.cityName;
@@ -65,7 +68,7 @@ const renderWeather = () => {
     document.getElementById('weatherState').textContent = weatherData.state;
     renderWeatherState(weatherData.state);
 
-    let date = new Date() + '';
+    let date = String(new Date());
     let dateFormatted = date.split(' ').slice(1, 4).join(' ');
 
     document.querySelector('.city_date').textContent = dateFormatted;
@@ -110,26 +113,35 @@ const renderWeatherState = (state) => {
 
 const searchScreen = document.getElementById('searchScreen');
 const searchHeader = document.getElementById('searchHeader');
+let errorMessageState = 0;
 
 searchScreen.addEventListener('keydown', (event) => {
     if (event.code === 'Enter') {
         fetchData(event.currentTarget.value)
             .then(r => {
-                document.querySelector('.search').classList.remove('search_invisible');
-                mainScreen.classList.add('invisible');
+                fetchForecast().then(r => {
+                    document.querySelector('.search').classList.remove('search_invisible');
+                    mainScreen.classList.add('invisible');
 
-                setTimeout(() => {
-                    document.querySelector('section').classList.add('hidden');
-                }, 500);
+                    setTimeout(() => {
+                        document.querySelector('section').classList.add('hidden');
+                    }, 500);
+                }).catch(err => {
+                    console.log('forecast error')
+                })
 
             }).catch(err => {
-                loading.remove();
+            loading.remove();
 
-                let errorMessage = document.createElement('p')
-                errorMessage.textContent = err.message;
-                errorMessage.classList.add('error');
+            if (errorMessageState) return;
 
-                document.querySelector('section').append(errorMessage);
+            let errorMessage = document.createElement('p')
+            errorMessage.textContent = err.message;
+            errorMessage.classList.add('error');
+
+            document.querySelector('section').append(errorMessage);
+
+            errorMessageState = 1;
         });
 
         localStorage.setItem('lastQuery', event.currentTarget.value);
@@ -140,20 +152,28 @@ searchHeader.addEventListener('keydown', (event) => {
     if (event.code === 'Enter') {
         fetchData(event.currentTarget.value)
             .then(r => {
-                document.querySelector('.search').classList.remove('search_invisible');
-                mainScreen.classList.add('invisible');
+                fetchForecast().then(r => {
+                    document.querySelector('.search').classList.remove('search_invisible');
+                    mainScreen.classList.add('invisible');
 
-                setTimeout(() => {
-                    document.querySelector('section').classList.add('hidden');
-                }, 500);
+                    setTimeout(() => {
+                        document.querySelector('section').classList.add('hidden');
+                    }, 500);
+                }).catch(err => {
+                    console.log('forecast error')
+                })
 
             })
             .catch(err => {
+                if (errorMessageState) return;
+
                 let errorMessage = document.createElement('p');
                 errorMessage.textContent = err.message;
                 errorMessage.classList.add('error_header');
 
                 document.querySelector('div.logo').after(errorMessage);
+
+                errorMessageState = 1;
             });
 
         localStorage.setItem('lastQuery', event.currentTarget.value);
@@ -161,6 +181,52 @@ searchHeader.addEventListener('keydown', (event) => {
         event.currentTarget.value = '';
     }
 })
+
+// Forecast
+
+let forecastData;
+
+const fetchForecast = async () => {
+    const geoResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${weatherData.cityName}&limit=1&appid=${weatherAPI}`);
+    let geoData = await geoResponse.json();
+
+    const lat = geoData[0].lat.toFixed(2);
+    const lon = geoData[0].lon.toFixed(2);
+
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min&timezone=auto`)
+    const data = await response.json();
+
+    forecastData = data.daily;
+
+    renderForecast();
+
+    // for (let el of Object.keys(data.list)) {
+    //     if (!(el % 8)) forecastData.push(data.list[el]);
+    // }
+}
+
+const renderForecast = () => {
+    for (let i = 0; i < 7; i++) {
+        let card = document.querySelector(`#c${i}`);
+        let date = document.querySelector(`#d${i}`)
+
+        if (!card) break;
+
+        card.firstElementChild.textContent = Math.round(forecastData.temperature_2m_max[i]);
+        card.lastElementChild.textContent = Math.round(forecastData.temperature_2m_min[i]);
+
+        if (!date) continue;
+
+        let dateValue = new Date(forecastData.time[i]).toString().split(' ').slice(1, 3).join(' ');
+
+        date.textContent = dateValue;
+
+    }
+
+    for (let i = 0; i < 7; i++) {
+
+    }
+}
 
 // if (localStorage.key('lastQuery')) {
 //     fetchData(localStorage.getItem('lastQuery'));

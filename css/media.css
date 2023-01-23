@@ -1,0 +1,146 @@
+@media (max-width: 1440px) {
+    .search_screen {
+        width: 80%;
+        height: 68vh;
+    }
+
+    main, header {
+        width: 80%;
+    }
+
+    .weather_details {
+        width: 65%;
+    }
+
+    .forecast_cards {
+        overflow-y: scroll;
+        gap: 20px;
+    }
+
+    .forecast_cards .card {
+        width: 18%;
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .search_screen {
+        height: 78vh;
+    }
+
+    .weather_details {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px 50px;
+        width: 40%;
+    }
+
+    .forecast_cards .card {
+        width: 18%;
+    }
+
+}
+
+@media (max-width: 768px) {
+    section.search_screen .search input {
+        width: 350px;
+    }
+
+}
+
+@media (max-width: 680px) {
+    .weather_general {
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+    }
+
+    .weather_general img {
+        width: 200px;
+    }
+
+    .search input {
+        width: 70px;
+    }
+
+    .error_header {
+        text-align: right;
+        margin-right: 10px;
+        margin-left: 30px;
+        font-size: 0.7em;
+    }
+
+    .search_screen {
+        height: 95%;
+    }
+
+}
+
+
+@media (max-width: 548px) {
+    .weather_general {
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+    }
+
+    .weather_general img {
+        width: 150px;
+    }
+
+    .forecast_cards .card {
+        width: 35%;
+    }
+
+    .heading, .weather_section .city_date {
+        text-align: center;
+    }
+
+    .search_screen__text {
+        font-size: 20px;
+        line-height: 40px;
+    }
+
+    section.search_screen .search input {
+        width: 300px;
+        font-size: 20px;
+        padding: 0 0 0 50px;
+    }
+
+    section.search_screen .search i {
+        font-size: 20px;
+        left: 20px;
+    }
+
+}
+
+@media (max-width: 375px) {
+    .weather_info {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+    }
+
+    .weather_details {
+        width: 80%;
+        margin-left: 0;
+        justify-content: stretch;
+    }
+
+    .weather_temp_wrapper .temperature {
+        text-align: center;
+    }
+
+    .error_header {
+        display: none;
+    }
+
+    section.search_screen .search input {
+        width: 200px;
+    }
+
+    .search_screen {
+        height: 116%;
+    }
+}

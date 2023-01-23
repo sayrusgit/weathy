@@ -30,6 +30,10 @@ kbd {
     border-radius: 10px;
 }
 
+/* Scroll */
+
+
+
 /* Header */
 
 header {
@@ -89,7 +93,6 @@ header {
 .error_header {
     font-size: 14px;
     color: #f66;
-    margin: 0 auto;
 }
 
 /* Search Screen */
@@ -208,6 +211,7 @@ main {
     display: flex;
     gap: 70px;
     padding: 15px;
+    margin-left: 30px;
     background-color: var(--second_col);
     border-radius: var(--round);
     border: var(--stroke);
@@ -216,6 +220,7 @@ main {
 .detail .detail_heading {
     color: var(--text_col);
     font-size: 14px;
+    white-space: nowrap;
 }
 
 .detail_parameters {
@@ -254,6 +259,7 @@ main {
     border-radius: var(--round);
     padding: 10px 15px;
     border: var(--stroke);
+    width: calc(100% / 7 - 55px);
 }
 
 .card__date {
