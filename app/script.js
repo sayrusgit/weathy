@@ -187,7 +187,7 @@ searchHeader.addEventListener('keydown', (event) => {
 let forecastData;
 
 const fetchForecast = async () => {
-    const geoResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${weatherData.cityName}&limit=1&appid=${weatherAPI}`);
+    const geoResponse = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${weatherData.cityName}&limit=1&appid=${weatherAPI}`);
     let geoData = await geoResponse.json();
 
     const lat = geoData[0].lat.toFixed(2);
