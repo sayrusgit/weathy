@@ -8,6 +8,10 @@
     --round: 20px;
     --stroke: 1px solid #575757;
 
+    --green: #9BBF6C;
+    --yellow: #B5A66D;
+    --red: #A34F4F;
+
 }
 
 * {
@@ -28,6 +32,10 @@ kbd {
     border: 2px solid var(--text_col);
     padding: 2px 8px;
     border-radius: 10px;
+}
+
+a, a:visited {
+    color: var(--text_col);
 }
 
 /* Scroll */
@@ -319,7 +327,131 @@ main {
     margin-left: 20px;
 }
 
-.coming_soon {
-    font-size: 20px;
+.aq_info {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 25px;
+}
+
+.aq_index {
+    height: 250px;
+    width: 22.5%;
+    background-color: var(--green);
+    border-radius: var(--round);
+    display: flex;
+    flex-direction: column;
     color: var(--text_col);
+    padding: 15px;
+}
+
+.aq_index__block {
+    display: flex;
+    align-items: center;
+}
+
+.block__value {
+    font-size: 35px;
+    margin-right: 10px;
+}
+
+.block__parameter {
+    width: 50%;
+    line-height: 13px;
+}
+
+.aq_index__state {
+    font-size: 40px;
+    color: #608234;
+    font-weight: 500;
+    align-self: center;
+    margin-top: 15%;
+}
+
+.aq_details {
+    width: 22.5%;
+    background-color: var(--second_col);
+    border-radius: var(--round);
+    border: var(--stroke);
+    padding: 15px;
+    display: flex;
+    gap: 15px;
+    color: var(--text_col);
+}
+
+.aq_detail__names {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.aq_detail__params {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.aq_detail__heading {
+    font-size: 14px;
+}
+
+.aq_detail__parameter {
+    font-size: 16px;
+}
+
+.aq_detail__value {
+    font-size: 18px;
+}
+
+.aq_alert {
+    width: 50%;
+    background-color: var(--second_col);
+    border-radius: var(--round);
+    color: var(--text_col);
+    padding: 15px;
+    border: var(--stroke);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.aq_alert__none {
+    font-size: 18px;
+}
+
+.alert {
+    display: flex;
+    gap: 15px;
+    border-radius: 15px;
+    padding: 15px;
+    height: 30%;
+}
+
+.alert_moderate {
+    background-color: var(--yellow);
+}
+
+.alert_dangerous {
+    background-color: var(--red);
+}
+
+.alert__block {
+    display: flex;
+    flex-direction: column;
+    color: #73683F;
+}
+
+.alert_dangerous .alert__block {
+    color: #6F2B2B;
+}
+
+.alert__block__value {
+    font-size: 35px;
+    font-weight: 600;
+    margin-top: -5px;
+}
+
+.alert__description {
+    font-size: 18px;
 }
