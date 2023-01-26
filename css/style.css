@@ -10,7 +10,10 @@
 
     --green: #9BBF6C;
     --yellow: #B5A66D;
+    --orange: #bc7231;
     --red: #A34F4F;
+    --purple: #5c3a79;
+    --maroon: #915c6c;
 
 }
 
@@ -107,7 +110,7 @@ header {
 
 .search_screen {
     width: 58.5%;
-    height: 63vh;
+    height: 890px;
     padding: 30px;
     border-radius: var(--round);
     background-color: var(--main_col);
@@ -366,6 +369,7 @@ main {
     font-weight: 500;
     align-self: center;
     margin-top: 15%;
+    text-align: center;
 }
 
 .aq_details {

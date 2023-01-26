@@ -27,13 +27,13 @@
         <input type="text" name="" id="searchHeader" placeholder="Search">
     </div>
 </header>
-<!--<section class="search_screen">-->
-<!--    <p class="search_screen__text">Type city, country below and press <kbd>Enter</kbd> to get weather</p>-->
-<!--    <div class="search">-->
-<!--        <i class="uil uil-search"></i>-->
-<!--        <input type="text" name="" id="searchScreen" placeholder="Search">-->
-<!--    </div>-->
-<!--</section>-->
+<section class="search_screen">
+    <p class="search_screen__text">Type city, country below and press <kbd>Enter</kbd> to get weather</p>
+    <div class="search">
+        <i class="uil uil-search"></i>
+        <input type="text" name="" id="searchScreen" placeholder="Search">
+    </div>
+</section>
 <main>
     <div class="weather_section">
         <span class="heading"><span id="city">Vilnius</span> • <span id="weatherState">Cloudy</span></span>
@@ -42,7 +42,7 @@
             <div class="weather_general">
                 <img src="img/cloudy.svg" alt="" class="weather_pattern" id="weatherPattern">
                 <div class="weather_temp_wrapper">
-                    <span class="temperature">24°</span>
+                    <span class="temperature" id="temp">24°</span>
                     <span class="feels_like">Feels like <span id="feelsLike">18</span>°</span>
                 </div>
             </div>
@@ -170,7 +170,7 @@
         <div class="aq_info">
             <div class="aq_index">
                 <div class="aq_index__block">
-                    <span class="block__value">21</span><span class="block__parameter">Air Quality Index</span>
+                    <span class="block__value" id="aqi">21</span><span class="block__parameter">Air Quality Index</span>
                 </div>
                 <span class="aq_index__state">Good</span>
             </div>
@@ -183,11 +183,11 @@
                     <p class="aq_detail__heading">O3</p>
                 </div>
                 <div class="aq_detail__params">
-                    <p class="aq_detail__heading"><span class="aq_detail__value">5</span> µg/m³</p>
-                    <p class="aq_detail__heading"><span class="aq_detail__value">45</span> µg/m³</p>
-                    <p class="aq_detail__heading"><span class="aq_detail__value">4</span> µg/m³</p>
-                    <p class="aq_detail__heading"><span class="aq_detail__value">25</span> µg/m³</p>
-                    <p class="aq_detail__heading"><span class="aq_detail__value">100</span> µg/m³</p>
+                    <p class="aq_detail__heading"><span class="aq_detail__value" id="pm25">15</span> µg/m³</p>
+                    <p class="aq_detail__heading"><span class="aq_detail__value" id="pm10">45</span> µg/m³</p>
+                    <p class="aq_detail__heading"><span class="aq_detail__value" id="co">4</span> µg/m³</p>
+                    <p class="aq_detail__heading"><span class="aq_detail__value" id="no2">25</span> µg/m³</p>
+                    <p class="aq_detail__heading"><span class="aq_detail__value" id="o3">100</span> µg/m³</p>
                 </div>
             </div>
             <div class="aq_alert">
@@ -199,7 +199,7 @@
                     <p class="alert__description">
                         PM2.5 concentration in Prague is
                         currently 3.2 times the WHO annual air quality
-                        <a href="https://www.who.int/news-room/questions-and-answers/item/who-global-air-quality-guidelines">guideline</a> value
+                        <a href="https://www.who.int/news-room/questions-and-answers/item/who-global-air-quality-guidelines" target="_blank">guideline</a> value
                     </p>
                 </div>
                 <div class="alert alert_dangerous">
@@ -210,7 +210,7 @@
                     <p class="alert__description">
                         PM10 concentration in Prague is
                         currently 6.2 times the WHO annual air quality
-                        <a href="https://www.who.int/news-room/questions-and-answers/item/who-global-air-quality-guidelines">guideline</a> value
+                        <a href="https://www.who.int/news-room/questions-and-answers/item/who-global-air-quality-guidelines" target="_blank">guideline</a> value
                     </p>
                 </div>
                 </div>
