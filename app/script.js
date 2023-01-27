@@ -313,7 +313,7 @@ searchScreen.addEventListener('keydown', (event) => {
 
         })
     }
-})
+});
 
 searchHeader.addEventListener('keydown', (event) => {
     if (event.code === 'Enter') {
@@ -329,7 +329,7 @@ searchHeader.addEventListener('keydown', (event) => {
             errorMessage.textContent = err.message;
             errorMessage.classList.add('error_header');
 
-            document.querySelector('div.logo').after(errorMessage);
+            document.querySelector('div.search').before(errorMessage);
 
             errorMessageState = 1;
         });
@@ -337,4 +337,29 @@ searchHeader.addEventListener('keydown', (event) => {
 
         event.currentTarget.value = '';
     }
-})
+});
+
+const toggle = document.querySelector('#toggle');
+let toggleState = 0;
+
+toggle.addEventListener('click', (event) => {
+    document.body.classList.toggle('white');
+
+    if (localStorage.getItem('theme') === 'white') {
+        toggleState = 1;
+    }
+
+    document.querySelector('#toggleMoon').classList.toggle('hidden');
+    document.querySelector('#toggleSun').classList.toggle('hidden');
+
+    if (toggleState) {
+        localStorage.setItem('theme', 'dark')
+        toggleState = 0;
+        return;
+    }
+
+    if (!toggleState) {
+        localStorage.setItem('theme', 'white')
+        toggleState = 1;
+    }
+});
