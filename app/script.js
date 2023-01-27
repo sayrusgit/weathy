@@ -11,6 +11,7 @@ let weather = {
         document.getElementById('wind').textContent = weather.data.windSpeed.toFixed(1);
         document.getElementById('humidity').textContent = weather.data.humidity;
         document.getElementById('pressure').textContent = Math.round(weather.data.pressure * 75/100);
+        document.getElementById('precipitation').textContent = weather.data.precipitation;
         document.getElementById('weatherState').textContent = weather.data.condition;
         document.getElementById('weatherState').textContent = weather.data.condition;
         document.getElementById('uv').textContent = weather.data.uv;
@@ -183,7 +184,7 @@ async function queryGeneral(city) {
 }
 
 async function queryForecast() {
-    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${weather.lat}&longitude=${weather.lon}&daily=temperature_2m_max,temperature_2m_min&timezone=auto`);
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${weather.lat}&longitude=${weather.lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=auto`);
 
     if (response.status !== 200){
         throw new Error('Something went wrong: Unknown Error');
@@ -222,6 +223,7 @@ async function fetchData(city) {
     let { timezone } = dataForecast;
     let { main:condition, conditionDescription } = dataGeneral.weather[0];
     let { temp:temperature, feels_like:apparentTemperature, humidity, pressure } = dataGeneral.main;
+    let precipitation = dataForecast.daily['precipitation_sum'][0]
     let { speed:windSpeed } = dataGeneral.wind;
     let uv = dataAirQuality.hourly['uv_index'][36];
 
@@ -247,6 +249,7 @@ async function fetchData(city) {
             apparentTemperature,
             humidity,
             pressure,
+            precipitation,
             windSpeed,
             uv,
             timezone,
