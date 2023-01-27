@@ -1,3 +1,17 @@
+@media (min-width: 2560px) {
+    .block__parameter {
+        width: 30%;
+    }
+
+    .aq_index {
+        height: 300px;
+    }
+
+    .aq_index__state {
+        font-size: 50px;
+    }
+}
+
 @media (max-width: 1440px) {
     .search_screen {
         width: 80%;
@@ -46,6 +60,44 @@
         width: 350px;
     }
 
+    .aq_info {
+        gap: 30px;
+        flex-direction: column;
+    }
+
+    .aq_details, .aq_alert, .aq_index {
+        width: 95%;
+    }
+
+    .aq_index {
+        height: 10%;
+    }
+
+    .aq_index__state {
+        margin-top: -8%;
+    }
+
+    .aq_details {
+        display: block;
+    }
+
+    .aq_detail__names {
+        flex-direction: row;
+        justify-content: center;
+        gap: 90px;
+    }
+
+    .aq_detail__params {
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 15px;
+        gap: 50px;
+    }
+
+    .block__parameter {
+        width: 20%;
+    }
+
 }
 
 @media (max-width: 680px) {
@@ -57,6 +109,7 @@
 
     .weather_general img {
         width: 200px;
+        height: 200px;
     }
 
     .search input {
@@ -74,6 +127,19 @@
         height: 95%;
     }
 
+    .aq_detail__names {
+        flex-direction: row;
+        justify-content: center;
+        gap: 73px;
+    }
+
+    .aq_detail__params {
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 15px;
+        gap: 30px;
+    }
+
 }
 
 
@@ -86,6 +152,7 @@
 
     .weather_general img {
         width: 150px;
+        height: 150px;
     }
 
     .forecast_cards .card {
@@ -112,6 +179,42 @@
         left: 20px;
     }
 
+}
+
+@media (max-width: 425px) {
+    .aq_detail__names {
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 35px;
+    }
+
+    .aq_detail__params {
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 15px;
+        gap: 20px;
+    }
+
+    .alert__description {
+        font-size: 16px;
+    }
+
+    .aq_index__state {
+        margin-top: -17%;
+    }
+
+    .aq_index {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .aq_index__state {
+        margin: 0;
+    }
+
+    .block__parameter {
+        width: 100%;
+    }
 }
 
 @media (max-width: 375px) {
@@ -143,4 +246,5 @@
     .search_screen {
         height: 116%;
     }
+
 }

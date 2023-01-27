@@ -18,7 +18,11 @@ let weather = {
         let date = String(new Date());
         let dateFormatted = date.split(' ').slice(1, 4).join(' ');
 
-        document.querySelector('.city_date').textContent = dateFormatted;
+        let timeRaw = new Date().toLocaleString("en-US", {timeZone: weather.data.timezone});
+        let time = timeRaw.split(' ').slice(1, 2).join(' ');
+        let timeFormatted = time.split(':').slice(0, 2).join(':') + ' PM';
+
+        document.querySelector('.city_date').textContent = dateFormatted + ', ' + timeFormatted;
 
         switch (weather.data.condition) {
             case 'Clear':
@@ -79,7 +83,11 @@ let weather = {
         document.getElementById('no2').textContent = weather.aq.no2;
         document.getElementById('o3').textContent = weather.aq.o3;
 
-        console.log(weather.aq.aqi)
+        if (weather.aq.aqi <= 51) {
+            document.querySelector('.aq_index').style.backgroundColor = 'var(--green)';
+            document.querySelector('.aq_index__state').style.color = '#608234';
+            document.querySelector('.aq_index__state').textContent = 'Good';
+        }
 
         if (weather.aq.aqi >= 51 && weather.aq.aqi <= 100) {
             document.querySelector('.aq_index').style.backgroundColor = 'var(--yellow)';
@@ -115,14 +123,43 @@ let weather = {
     },
 
     renderAqAlert() {
+        if (weather.aq.pm25 < 7.5) {
+            document.querySelector('.alert').classList.add('hidden');
+            document.querySelector('.aq_alert__none').classList.remove('hidden');
+        }
 
+        if (weather.aq.pm25 > 7.5) {
+            const alertNone = document.querySelector('.aq_alert__none');
+
+            if (alertNone) alertNone.classList.add('hidden');
+
+            const alert = document.querySelector('.alert');
+            const alertCity = document.querySelector('#alert__description__city');
+            const exceedingValue = document.querySelector('.alert__block__value');
+            const exceedingValueDesc = document.querySelector('#alert__description__value');
+
+            const exceeding = weather.aq.pm25 / 5;
+
+            alertCity.textContent = weather.data.cityName;
+            exceedingValue.textContent = 'x' + exceeding;
+            exceedingValueDesc.textContent = exceeding;
+
+            if (exceeding > 5) {
+                alert.classList.add('alert_dangerous');
+                alert.classList.remove('alert_moderate')
+            } else {
+                alert.classList.add('alert_moderate');
+                alert.classList.remove('alert_dangerous')
+            }
+
+            document.querySelector('.alert').classList.remove('hidden');
+        }
     }
-
 
 }
 
-async function queryGeneral(link) {
-    const response = await fetch(link);
+async function queryGeo(city) {
+    const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${owmAPI}`);
 
     if (response.status === 404) {
         throw new Error('Wrong city name. Try again');
@@ -133,8 +170,8 @@ async function queryGeneral(link) {
     return response;
 }
 
-async function queryForecast(link) {
-    const response = await fetch(link);
+async function queryGeneral(city) {
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${owmAPI}`);
 
     if (response.status === 404) {
         throw new Error('Wrong city name. Try again');
@@ -145,12 +182,20 @@ async function queryForecast(link) {
     return response;
 }
 
-async function queryAirQuality(link) {
-    const response = await fetch(link);
+async function queryForecast() {
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${weather.lat}&longitude=${weather.lon}&daily=temperature_2m_max,temperature_2m_min&timezone=auto`);
 
-    if (response.status === 404) {
-        throw new Error('Wrong city name. Try again');
-    } else if (response.status !== 200){
+    if (response.status !== 200){
+        throw new Error('Something went wrong: Unknown Error');
+    }
+
+    return response;
+}
+
+async function queryAirQuality() {
+    const response = await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${weather.lat}&longitude=${weather.lon}&hourly=pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,ozone,uv_index,us_aqi&timezone=auto`);
+
+    if (response.status !== 200){
         throw new Error('Something went wrong: Unknown Error');
     }
 
@@ -158,28 +203,27 @@ async function queryAirQuality(link) {
 }
 
 async function fetchData(city) {
-    const responseGeocode = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${owmAPI}`);
+    const responseGeocode = await queryGeo(city);
 
     let dataGeocode = await responseGeocode.json();
 
     weather.lat = dataGeocode[0].lat.toFixed(2);
     weather.lon = dataGeocode[0].lon.toFixed(2);
 
-    const responseGeneral = await queryGeneral(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${owmAPI}`);
-    const responseForecast = await queryForecast(`https://api.open-meteo.com/v1/forecast?latitude=${weather.lat}&longitude=${weather.lon}&daily=temperature_2m_max,temperature_2m_min&timezone=auto`);
-    const responseAirQuality = await queryAirQuality(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${weather.lat}&longitude=${weather.lon}&hourly=pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,ozone,uv_index,us_aqi&timezone=auto`)
+    const responseGeneral = await queryGeneral(city);
+    const responseForecast = await queryForecast();
+    const responseAirQuality = await queryAirQuality()
 
     const dataGeneral = await responseGeneral.json();
     const dataForecast = await responseForecast.json();
     const dataAirQuality = await responseAirQuality.json();
 
-    let { name:cityName, timezone } = dataGeneral;
+    let { name:cityName } = dataGeneral;
+    let { timezone } = dataForecast;
     let { main:condition, conditionDescription } = dataGeneral.weather[0];
     let { temp:temperature, feels_like:apparentTemperature, humidity, pressure } = dataGeneral.main;
     let { speed:windSpeed } = dataGeneral.wind;
     let uv = dataAirQuality.hourly['uv_index'][36];
-
-    console.log(uv)
 
     if (condition === 'Clouds') condition = 'Overcast';
     if (conditionDescription === 'few clouds') conditionDescription = 'Cloudy';
@@ -221,16 +265,16 @@ async function fetchData(city) {
     }
 }
 
+//
+
 const loading = document.createElement('img');
 loading.src = 'img/loading.svg';
 loading.classList.add('loading');
 
 const mainScreen = document.querySelector('section');
-
-
-
 const searchScreen = document.getElementById('searchScreen');
 const searchHeader = document.getElementById('searchHeader');
+
 let errorMessageState = 0;
 
 searchScreen.addEventListener('keydown', (event) => {
@@ -242,6 +286,7 @@ searchScreen.addEventListener('keydown', (event) => {
             weather.renderWeather();
             weather.renderForecast();
             weather.renderAirQuality();
+            weather.renderAqAlert();
 
             document.querySelector('.search').classList.remove('search_invisible');
             mainScreen.classList.add('invisible');
@@ -250,56 +295,41 @@ searchScreen.addEventListener('keydown', (event) => {
                 document.querySelector('section').classList.add('hidden');
             }, 500);
 
+        }).catch(err => {
+            loading.remove();
+
+            if (errorMessageState) return;
+
+            let errorMessage = document.createElement('p')
+            errorMessage.textContent = err.message;
+            errorMessage.classList.add('error');
+
+            document.querySelector('section').append(errorMessage);
+
+            errorMessageState = 1;
+
         })
-
-
-
-        // fetchData(event.currentTarget.value)
-        //     .then(r => {
-        //         fetchForecast().then(r => {
-        //             document.querySelector('.search').classList.remove('search_invisible');
-        //             mainScreen.classList.add('invisible');
-        //
-        //             setTimeout(() => {
-        //                 document.querySelector('section').classList.add('hidden');
-        //             }, 500);
-        //         }).catch(err => {
-        //             console.log('forecast error')
-        //         })
-        //
-        //     }).catch(err => {
-        //     loading.remove();
-        //
-        //     if (errorMessageState) return;
-        //
-        //     let errorMessage = document.createElement('p')
-        //     errorMessage.textContent = err.message;
-        //     errorMessage.classList.add('error');
-        //
-        //     document.querySelector('section').append(errorMessage);
-        //
-        //     errorMessageState = 1;
-        // });
-        //
-        // localStorage.setItem('lastQuery', event.currentTarget.value);
     }
 })
 
 searchHeader.addEventListener('keydown', (event) => {
     if (event.code === 'Enter') {
-        fetchData(event.currentTarget.value).catch(err => {
-                if (errorMessageState) return;
+        fetchData(event.currentTarget.value).then(r => {
+            weather.renderWeather();
+            weather.renderForecast();
+            weather.renderAirQuality();
+            weather.renderAqAlert();
+        }).catch(err => {
+            if (errorMessageState) return;
 
-                let errorMessage = document.createElement('p');
-                errorMessage.textContent = err.message;
-                errorMessage.classList.add('error_header');
+            let errorMessage = document.createElement('p');
+            errorMessage.textContent = err.message;
+            errorMessage.classList.add('error_header');
 
-                document.querySelector('div.logo').after(errorMessage);
+            document.querySelector('div.logo').after(errorMessage);
 
-                errorMessageState = 1;
+            errorMessageState = 1;
         });
-
-        fetchForecast().catch(err => console.log(err));
 
 
         event.currentTarget.value = '';
